@@ -53,9 +53,9 @@ module Vimeo
                         :required => [:user_id],
                         :optional => [:page, :per_page, :full_response, :sort]
 
-      create_api_method :get_info,
-                        "vimeo.videos.getInfo",
-                        :required => [:video_id]
+      # create_api_method :get_info,
+      #                   "vimeo.videos.getInfo",
+      #                   :required => [:video_id]
 
       create_api_method :get_collections,
                         "vimeo.videos.getCollections",
