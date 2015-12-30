@@ -67,7 +67,7 @@ module Vimeo
     class Base
       extend CreateApiMethod
 
-      ENDPOINT = "https://vimeo.com/api/rest/v2"
+      ENDPOINT = "https://api.vimeo.com"
 
       def initialize(consumer_key, consumer_secret, options = {})
         timeout = options.fetch("timeout", 30)
@@ -97,8 +97,13 @@ module Vimeo
 private
 
       def make_request(options, authorized)
+        path = "#{Vimeo::Advanced::Base::ENDPOINT}/videos/#{options[:video_id]}"
+        puts ".... request path is #{path}"
         if authorized
-          raw_response = @oauth_consumer.request(:post, Vimeo::Advanced::Base::ENDPOINT, get_access_token, {}, options).body
+          puts "getting token"
+          token = get_access_token
+          puts "sending request"
+          raw_response = @oauth_consumer.request(:get, path, token, {}, {}).body
         else
           raw_response = @oauth_consumer.request(:post, Vimeo::Advanced::Base::ENDPOINT, nil, {}, options).body
         end
